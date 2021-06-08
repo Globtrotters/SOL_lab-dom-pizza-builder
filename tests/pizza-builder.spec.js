@@ -10,6 +10,8 @@ const pascalCaseToDashSeparated = (value) =>
 const extractAmountFromPrice = (price) => Number(price.replace(/\$ /g, ''));
 
 const getPageState = async () => await page.evaluate(() => state);
+const setPageState = async (newState) =>
+  await page.evaluate((newState) => Object.assign(state, newState));
 
 // Ironhack Pizza Builder Test-suite
 describe('Ironhack Pizza Builder', () => {
@@ -21,7 +23,13 @@ describe('Ironhack Pizza Builder', () => {
   beforeEach(async () => {
     await page.reload();
     // Start of by attempting to de-activate every ingredient
-    const state = await getPageState();
+    const state = await setPageState({
+      pepperoni: false,
+      mushrooms: false,
+      greenPeppers: false,
+      sauce: false,
+      glutenFreeCrust: false
+    });
     const activeIngredients = Object.entries(state)
       .filter(([ingredient, active]) => active)
       .map(([ingredient]) => ingredient);

@@ -71,7 +71,7 @@ function renderGreenPeppers() {
 function renderWhiteSauce() {
   const whiteSauce = document.querySelector('.sauce');
   // This is flag
-  if (state.whiteSauce) {
+  if (state.sauce) {
     whiteSauce.classList.add('sauce-white');
   } else {
     whiteSauce.classList.remove('sauce-white');
