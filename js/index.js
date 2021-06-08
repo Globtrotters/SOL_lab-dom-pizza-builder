@@ -1,22 +1,22 @@
 // Write your Pizza Builder JavaScript in this file.
 
 // Constants
-let basePrice = 10;
-let ingredients = {
+const basePrice = 10;
+const ingredients = {
   pepperoni: { name: 'Pepperoni', price: 1 },
   mushrooms: { name: 'Mushrooms', price: 1 },
   greenPeppers: { name: 'Green Peppers', price: 1 },
-  whiteSauce: { name: 'White sauce', price: 3 },
+  sauce: { name: 'White sauce', price: 3 },
   glutenFreeCrust: { name: 'Gluten-free crust', price: 5 }
 };
 
 // Initial value of the state (the state values can change over time)
-let state = {
-  pepperoni: true,
-  mushrooms: true,
-  greenPeppers: true,
-  whiteSauce: true,
-  glutenFreeCrust: true
+const state = {
+  pepperoni: false,
+  mushrooms: false,
+  greenPeppers: false,
+  sauce: false,
+  glutenFreeCrust: false
 };
 
 // This function takes care of rendering the pizza based on the state
@@ -91,6 +91,19 @@ function renderGlutenFreeCrust() {
 
 function renderButtons() {
   // Iteration 3: add/remove the class "active" of each `<button class="btn">`
+  document.querySelectorAll('.btn').forEach((button) => {
+    console.log(button);
+    let ingredient;
+    if (button.classList.contains('btn-pepperoni')) ingredient = 'pepperoni';
+    if (button.classList.contains('btn-mushrooms')) ingredient = 'mushrooms';
+    if (button.classList.contains('btn-green-peppers'))
+      ingredient = 'greenPeppers';
+    if (button.classList.contains('btn-sauce')) ingredient = 'sauce';
+    if (button.classList.contains('btn-crust')) ingredient = 'glutenFreeCrust';
+
+    if (state[ingredient]) button.classList.add('active');
+    else button.classList.remove('active');
+  });
 }
 
 function renderPrice() {
@@ -133,7 +146,7 @@ document
   });
 // Iteration 2: Add click event listener on `<button class="btn btn-sauce">`
 document.querySelector('.btn.btn-sauce').addEventListener('click', () => {
-  state.whiteSauce = !state.whiteSauce;
+  state.sauce = !state.sauce;
   console.log('Button white sauce clicked');
   renderEverything();
 });
