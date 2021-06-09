@@ -11,7 +11,8 @@ const extractAmountFromPrice = (price) => Number(price.replace(/\$ /g, ''));
 
 const getPageState = async () => await page.evaluate(() => state);
 const setPageState = async (newState) =>
-  await page.evaluate((newState) => Object.assign(state, newState));
+  await page.evaluate((newState) => Object.assign(state, newState), newState);
+const renderPage = async () => await page.evaluate(() => renderEverything());
 
 // Ironhack Pizza Builder Test-suite
 describe('Ironhack Pizza Builder', () => {
@@ -21,16 +22,17 @@ describe('Ironhack Pizza Builder', () => {
   });
 
   beforeEach(async () => {
-    await page.reload();
+    //await page.reload();
     // Start of by attempting to de-activate every ingredient
-    const state = await setPageState({
+    await setPageState({
       pepperoni: false,
       mushrooms: false,
       greenPeppers: false,
       sauce: false,
       glutenFreeCrust: false
     });
-    const activeIngredients = Object.entries(state)
+    await renderPage();
+    /*     const activeIngredients = Object.entries(state)
       .filter(([ingredient, active]) => active)
       .map(([ingredient]) => ingredient);
     const buttonSelectors = activeIngredients.map(
@@ -39,7 +41,7 @@ describe('Ironhack Pizza Builder', () => {
     for (const selector of buttonSelectors) {
       const button = await page.$(selector);
       await button.click();
-    }
+    } */
   });
 
   describe('Single Ingredient', () => {

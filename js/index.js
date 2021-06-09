@@ -12,11 +12,11 @@ const ingredients = {
 
 // Initial value of the state (the state values can change over time)
 const state = {
-  pepperoni: false,
-  mushrooms: false,
-  greenPeppers: false,
-  sauce: false,
-  glutenFreeCrust: false
+  pepperoni: true,
+  mushrooms: true,
+  greenPeppers: true,
+  sauce: true,
+  glutenFreeCrust: true
 };
 
 // This function takes care of rendering the pizza based on the state
@@ -92,17 +92,38 @@ function renderGlutenFreeCrust() {
 function renderButtons() {
   // Iteration 3: add/remove the class "active" of each `<button class="btn">`
   document.querySelectorAll('.btn').forEach((button) => {
-    console.log(button);
-    let ingredient;
-    if (button.classList.contains('btn-pepperoni')) ingredient = 'pepperoni';
-    if (button.classList.contains('btn-mushrooms')) ingredient = 'mushrooms';
-    if (button.classList.contains('btn-green-peppers'))
-      ingredient = 'greenPeppers';
-    if (button.classList.contains('btn-sauce')) ingredient = 'sauce';
-    if (button.classList.contains('btn-crust')) ingredient = 'glutenFreeCrust';
+    const classListArr = Array.from(button.classList);
+    const ingredientClass = classListArr.find((className) =>
+      className.includes('btn-')
+    );
 
-    if (state[ingredient]) button.classList.add('active');
-    else button.classList.remove('active');
+    let ingredient;
+    switch (ingredientClass) {
+      case 'btn-pepperoni':
+        ingredient = 'pepperoni';
+        break;
+      case 'btn-mushrooms':
+        ingredient = 'mushrooms';
+        break;
+      case 'btn-green-peppers':
+        ingredient = 'greenPeppers';
+        break;
+      case 'btn-green-peppers':
+        ingredient = 'greenPeppers';
+        break;
+      case 'btn-sauce':
+        ingredient = 'sauce';
+        break;
+      case 'btn-crust':
+        ingredient = 'glutenFreeCrust';
+        break;
+    }
+
+    if (state[ingredient]) {
+      button.classList.add('active');
+    } else {
+      button.classList.remove('active');
+    }
   });
 }
 
